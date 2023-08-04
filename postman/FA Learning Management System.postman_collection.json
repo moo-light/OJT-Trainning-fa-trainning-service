@@ -1,0 +1,3464 @@
+{
+	"info": {
+		"_postman_id": "b96e0a38-d6f4-43b4-a0c0-01356975ee9f",
+		"name": "FA Learning Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25631147"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var  jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"TOKEN\", jsonData.accessToken);\r",
+									"\r",
+									"pm.test(\"Status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"volam\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/Login",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"valannn\",\r\n  \"email\": \"voolam@example.com\",\r\n  \"password\": \"1233\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/Register",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/Logout",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"Logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login With Google",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"provider\": \"GOOGLE\",\r\n  \"idToken\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjI1NWNjYTZlYzI4MTA2MDJkODBiZWM4OWU0NTZjNDQ5NWQ3NDE4YmIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNTAxNDYzMDY0NDcxLXYxc244ZTc1ZnFrOGJqZzk3NWRibjZmYjI5NDU5ZHNxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNTAxNDYzMDY0NDcxLXYxc244ZTc1ZnFrOGJqZzk3NWRibjZmYjI5NDU5ZHNxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAxNTE4Njk5NjAxMjk3MzM4MDE0IiwiZW1haWwiOiJ2LnRyY2xhbUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InViT25PSTRNdERQS3F5Mlh2dEdtV3ciLCJuYW1lIjoiVHLDumMgTGFtIFbDtSIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BR05teXhiQ2tmMjdSTVdsbzZ5ckxkckMwRXV1ckFxZVFIWlREYWtiYnlrYj1zOTYtYyIsImdpdmVuX25hbWUiOiJUcsO6YyBMYW0iLCJmYW1pbHlfbmFtZSI6IlbDtSIsImxvY2FsZSI6InZpIiwiaWF0IjoxNjc4MjYzMzExLCJleHAiOjE2NzgyNjY5MTEsImp0aSI6IjA2ZDYwZmFjMjU1M2IyNDdmN2E5YmUzZTg2YTk1ZTJjMzk2MzMxMWEifQ.eFP1Cw227SLjNTrRba0VBTtJGJtrqZgcsjDC80dAGzDXg6DjjI9iJKDvcxEG6A8PDx5wA6wtrGgZsIFYxrc8H2jJblZyoc-KCmzRsLBbZNkFM5N5_dffT5fEkBfVspgFT_pb6MMOX6H4o2hRYoKPKv5nDZzHeq3Z3AaCeU2AzS7iLFRHekZdb0E97EU_ROR-b9wiRUq7LAm9MorBf3NZ_NEHqWsX6ZR0vPnUkpF8DGrnsluXR-ksFUM1u_DoBi8xeVb8j27mpBLP7Lkhtp7zckeRc3aQ6KxneA6JUrIdlZSkaJn9aBjrUAqGXrWDazXiaCZp-SUARRqXIGAdi3rEQw\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/LoginWithGoogle",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"LoginWithGoogle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RefreshToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/RefreshToken?accessToken=token&refreshtoken=token",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"RefreshToken"
+							],
+							"query": [
+								{
+									"key": "accessToken",
+									"value": "token"
+								},
+								{
+									"key": "refreshtoken",
+									"value": "token"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Application",
+			"item": [
+				{
+					"name": "Create Application",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status should be 204\",function(){\r",
+									"    pm.response.to.have.status(204)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userID\": \"26FF9133-FF9C-44F6-BE0D-1B8207CD0D2D\",\r\n  \"reason\": \"string\",\r\n  \"absentDateRequested\": \"2023-03-08T03:47:01.846Z\",\r\n  \"approved\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Application/CreateApplication",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Application",
+								"CreateApplication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\",function(){\r",
+									"    pm.response.to.have.status(\"OK\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Application/UpdateStatus?id=FB330C87-6B38-44A2-9717-AB15F7C5B3E2&status=false",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Application",
+								"UpdateStatus"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "FB330C87-6B38-44A2-9717-AB15F7C5B3E2"
+								},
+								{
+									"key": "status",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View All Application",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"reason\": \"string\",\r\n  \"absentDateRequested\": \"2023-03-08T04:08:10.828Z\",\r\n  \"approved\": true,\r\n  \"fromDate\": \"2023-03-08T04:08:10.828Z\",\r\n  \"toDate\": \"2023-03-08T04:08:10.828Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Application/ViewAllApplication/26ff9133-ff9c-44f6-be0d-1b8207cd0d2d?by=admin&s=s&p=0&ps=10",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Application",
+								"ViewAllApplication",
+								"26ff9133-ff9c-44f6-be0d-1b8207cd0d2d"
+							],
+							"query": [
+								{
+									"key": "by",
+									"value": "admin"
+								},
+								{
+									"key": "s",
+									"value": "s"
+								},
+								{
+									"key": "p",
+									"value": "0"
+								},
+								{
+									"key": "ps",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "GetAttendanceByClassId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/GetAttendanceByClassId?id=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"GetAttendanceByClassId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAttendanceByTraineeId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/GetAttendanceByTraineeId?id=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"GetAttendanceByTraineeId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllAttendanceReports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/GetAllAttendanceReports/e117d7cd-b8c2-4ef1-a6a2-3013300a98ce?from=123&to=12-12&s=s&by=None&apli=false&p=123&ps=40",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"GetAllAttendanceReports",
+								"e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "123"
+								},
+								{
+									"key": "to",
+									"value": "12-12"
+								},
+								{
+									"key": "s",
+									"value": "s"
+								},
+								{
+									"key": "by",
+									"value": "None"
+								},
+								{
+									"key": "apli",
+									"value": "false"
+								},
+								{
+									"key": "p",
+									"value": "123"
+								},
+								{
+									"key": "ps",
+									"value": "40"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CheckAttendance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"status\": true,\r\n    \"userId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/CheckAttendance?classId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"CheckAttendance"
+							],
+							"query": [
+								{
+									"key": "classId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CheckAttendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"status\": true,\r\n    \"date\": \"2023-03-08T04:27:16.018Z\",\r\n    \"userId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"attendanceId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n  }\r\n]"
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/CheckAttendance?classId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"CheckAttendance"
+							],
+							"query": [
+								{
+									"key": "classId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditAttendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": true,\r\n  \"date\": \"2023-03-08T04:30:27.036Z\",\r\n  \"userId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"attendanceId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/EditAttendance?classId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"EditAttendance"
+							],
+							"query": [
+								{
+									"key": "classId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Check Attendance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"status\": true,\r\n    \"date\": \"2023-03-01T02:23:57.284Z\",\r\n    \"userId\": \"E71F0A5E-4987-4CB4-8D39-15910BFFADA9\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Attendance/CheckAttendance?classId=D896DA1F-D1F5-4CCD-8B4D-9EA67B188BA1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Attendance",
+								"CheckAttendance"
+							],
+							"query": [
+								{
+									"key": "classId",
+									"value": "D896DA1F-D1F5-4CCD-8B4D-9EA67B188BA1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"oldPassword\": \"string\",\r\n  \"newPassword\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/ChangePassword",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"ChangePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"roleID\": 0,\r\n  \"email\": \"string\",\r\n  \"fullName\": \"string\",\r\n  \"gender\": \"string\",\r\n  \"dateOfBirth\": \"2023-03-08T06:36:30.747Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/UpdateUser",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"UpdateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ForgotPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/ForgotPassword?email=ac",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"ForgotPassword"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "ac"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"code\": \"string\",\r\n  \"newPassword\": \"string\",\r\n  \"confirmPassword\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/ResetPassword",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"ResetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/GetAllUser",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"GetAllUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserPagination",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/GetUserPagination?pageIndex=0&pageSize=10",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"GetUserPagination"
+							],
+							"query": [
+								{
+									"key": "pageIndex",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userID\": \"68607cf6-9c6f-468a-8e0d-dc1598b97afb\",\r\n  \"roleID\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/ChangeUserRole",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"ChangeUserRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/GetUserById?id=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"GetUserById"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DisableUserById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/DisableUserById?userId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"DisableUserById"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddUserManually",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"string\",\r\n  \"pass\": \"string\",\r\n  \"fullName\": \"string\",\r\n  \"email\": \"user@example.com\",\r\n  \"dateOfBirth\": \"2023-03-08T06:44:26.830Z\",\r\n  \"gender\": \"string\",\r\n  \"roleId\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Users/AddUserManually",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"AddUserManually"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ImportExcel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/ImportExcel",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"ImportExcel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Users/Search?searchString=b&gender=male&role=1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Users",
+								"Search"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "b"
+								},
+								{
+									"key": "gender",
+									"value": "male"
+								},
+								{
+									"key": "role",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Feedback",
+			"item": [
+				{
+					"name": "Create Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"feedbackTitle\": \"Test feedback\",\r\n  \"feedbackLink\": \"https://forms.gle/yBjasHH7paHwpb4MA\",\r\n  \"trainingCLassId\": \"58C58984-CF24-47BC-B3FC-50A06075ACC2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Feedbacks/Create",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Feedbacks",
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Feedbacks/GetAll",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Feedbacks",
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "ea5d9b80-c6bd-4521-1b8d-08db13edff54",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Feedbacks/GetById/ea5d9b80-c6bd-4521-1b8d-08db13edff54",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Feedbacks",
+								"GetById",
+								"ea5d9b80-c6bd-4521-1b8d-08db13edff54"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"feedbackTitle\": \"string\",\r\n  \"feedbackLink\": \"string\",\r\n  \"trainingCLassId\": \"58C58984-CF24-47BC-B3FC-50A06075ACC2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Feedbacks/Edit/ea5d9b80-c6bd-4521-1b8d-08db13edff54",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Feedbacks",
+								"Edit",
+								"ea5d9b80-c6bd-4521-1b8d-08db13edff54"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Feedbacks/Delete?id=ea5d9b80-c6bd-4521-1b8d-08db13edff54",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Feedbacks",
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "ea5d9b80-c6bd-4521-1b8d-08db13edff54"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SendFeedbackLink",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Feedbacks/SendFeedbackLink?feedbackId=8a098548-d62d-40a0-7b77-08db1479fdfa",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Feedbacks",
+								"SendFeedbackLink"
+							],
+							"query": [
+								{
+									"key": "feedbackId",
+									"value": "8a098548-d62d-40a0-7b77-08db1479fdfa"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "SendFeedbackLink",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7230/api/Feedbacks/SendFeedbackLink?feedbackId=ea5d9b80-c6bd-4521-1b8d-08db13edff54",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7230",
+									"path": [
+										"api",
+										"Feedbacks",
+										"SendFeedbackLink"
+									],
+									"query": [
+										{
+											"key": "feedbackId",
+											"value": "ea5d9b80-c6bd-4521-1b8d-08db13edff54"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 21 Feb 2023 17:09:52 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more at"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Grading",
+			"item": [
+				{
+					"name": "ExportMarkReportForClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}api/Gradings/ExportMarkReportForClass/classID?classID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}api"
+							],
+							"path": [
+								"Gradings",
+								"ExportMarkReportForClass",
+								"classID"
+							],
+							"query": [
+								{
+									"key": "classID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExportMarkReportForTrainee",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Gradings/ExportMarkReportForTrainee/traineeId?traineeId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Gradings",
+								"ExportMarkReportForTrainee",
+								"traineeId"
+							],
+							"query": [
+								{
+									"key": "traineeId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Syllabus",
+			"item": [
+				{
+					"name": "GetAllSyllabus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"pm.test(\"Syllabus should have name: Advanced Cross-Platform Application Programming With .NET\",function(){\r",
+									"     var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.result[2].name).to.equal(\"Advanced Cross-Platform Application Programming With .NET\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/GetAllSyllabus",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"GetAllSyllabus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FilterSyllabus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/FilerSyllabus?firstDuration=20&secondDuration=40",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"FilerSyllabus"
+							],
+							"query": [
+								{
+									"key": "firstDuration",
+									"value": "20"
+								},
+								{
+									"key": "secondDuration",
+									"value": "40"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSyllabus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJhNzcxNzQ3OS1jMGRmLTRjN2UtYTNiYS1mOWFmMTRmYThmYWEiLCJTeWxsYWJ1c1Blcm1pc3Npb24iOiJGdWxsQWNjZXNzIiwiVHJhaW5pbmdQcm9ncmFtUGVybWlzc2lvbiI6IkZ1bGxBY2Nlc3MiLCJUcmFpbmluZ01hdGVyaWFsUGVybWlzc2lvbiI6IkZ1bGxBY2Nlc3MiLCJDbGFzc1Blcm1pc3Npb24iOiJGdWxsQWNjZXNzIiwiTGVhcm5pbmdNYXRlcmlhbCI6IkZ1bGxBY2Nlc3MiLCJBdHRlbmRhbmNlUGVybWlzc2lvbiI6IkZ1bGxBY2Nlc3MiLCJVc2VyUGVybWlzc2lvbiI6IkZ1bGxBY2Nlc3MiLCJBcHBsaWNhdGlvblBlcm1pc3Npb24iOiJGdWxsQWNjZXNzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlN1cGVyQWRtaW4iLCJleHAiOjE2NzgyNDg4MzksImlzcyI6IlRoaXNJc01vcmVUaGFuMTI4Yml0c1NlY3JldEtleSIsImF1ZCI6IlRoaXNJc01vcmVUaGFuMTI4Yml0c1NlY3JldEtleSJ9.dEyYObjtSjXxnhY0d9azGUvsNFxpJn6uwgyRfzoxLUU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/DeleteSyllabus?id=E117D7CD-B8C2-4EF1-A6A2-3013300A98CE",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"DeleteSyllabus"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "E117D7CD-B8C2-4EF1-A6A2-3013300A98CE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNewSyllabus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Create should be ok\",function(){\r",
+									"pm.response.to.have.status(\"OK\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"syllabusBase\": {\r\n    \"syllabusName\": \"C#\",\r\n    \"code\": \".NET\",\r\n    \"courseObject\": \"string\",\r\n    \"techRequirements\": \"string\",\r\n    \"duration\": 0\r\n  },\r\n  \"units\": [\r\n    {\r\n      \"unitName\": \"Basic C#\",\r\n      \"totalTime\": 120,\r\n      \"session\": 6,\r\n      \"lectures\": [\r\n        {\r\n          \"lectureName\": \"Introduce to C#\",\r\n          \"outputStandards\": \"h2sd4\",\r\n          \"duration\": 12,\r\n          \"deliveryType\": \"Workshop\",\r\n          \"status\": \"ok\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/AddNewSyllabus",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"AddNewSyllabus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateSyllabus",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be no content\",function(){\r",
+									"    pm.response.to.have.status(204)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"syllabusName\": \"Data structure\",\r\n  \"code\": \"string\",\r\n  \"courseObject\": \"string\",\r\n  \"techRequirement\": \"string\",\r\n  \"duration\": 0,\r\n  \"units\": [\r\n    {\r\n      \"unitID\": \"AA89815C-7AE4-4816-C4E3-08DB1F8B2B7D\",\r\n      \"unitName\": \"string\",\r\n      \"totalTime\": 0,\r\n      \"syllabusId\": \"CAEBB6D5-543C-436A-9CE1-F2DFBBE53615\",\r\n      \"updateLectureDTOs\": [\r\n        {\r\n          \"lectureID\": \"04CF2CFE-D0D6-4203-9559-3513AC70647E\",\r\n          \"lectureName\": \"string\",\r\n          \"outputStandards\": \"string\",\r\n          \"duration\": 0,\r\n          \"deliveryType\": \"string\",\r\n          \"status\": \"string\",\r\n          \"unitID\": \"AA89815C-7AE4-4816-C4E3-08DB1F8B2B7D\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/UpdateSyllabus?syllabusId=CAEBB6D5-543C-436A-9CE1-F2DFBBE53615",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"UpdateSyllabus"
+							],
+							"query": [
+								{
+									"key": "syllabusId",
+									"value": "CAEBB6D5-543C-436A-9CE1-F2DFBBE53615"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ViewSyllabusDetail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"pm.test(\"Syllabus should have name: C#\",function(){\r",
+									"     var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.syllabusBase.syllabusName).to.equal(\"C#\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/ViewDetail?SyllabusId=D5DF6B9A-C4FF-4275-8B4B-4F024DAEFF84",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"ViewDetail"
+							],
+							"query": [
+								{
+									"key": "SyllabusId",
+									"value": "D5DF6B9A-C4FF-4275-8B4B-4F024DAEFF84"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Syllabuses by name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Syllabus/Get/GetName/a",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Syllabus",
+								"Get",
+								"GetName",
+								"a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "CreateLocation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code ahould be 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"locationName\": \"TP.Hanoi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Locations/CreateLocation",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Locations",
+								"CreateLocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ViewAllLocation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Location should have name:\",function(){\r",
+									"    var responseBody=pm.response.json();\r",
+									"    pm.expect(responseBody[1].locationName).to.eql(\"TP.Hanoi\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Locations/ViewAllLocation",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Locations",
+								"ViewAllLocation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Exam",
+			"item": [
+				{
+					"name": "AddQuestionIntoBank",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"topicID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"typeID\": 0,\r\n  \"content\": \"string\",\r\n  \"answer1\": \"string\",\r\n  \"answer2\": \"string\",\r\n  \"answer3\": \"string\",\r\n  \"answer4\": \"string\",\r\n  \"correctAnswer\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Test/AddQuestionIntoBank",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"AddQuestionIntoBank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEmptyQuizTest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Test/CreateEmptyQuizTest",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"CreateEmptyQuizTest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddQuestionToQuizTest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"quizId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"questionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Test/AddQuestionToQuizTest",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"AddQuestionToQuizTest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateQuizTest",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idQuestionWantToUpdate\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"newQuestionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Test/UpdateQuizTest?quizTestId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"UpdateQuizTest"
+							],
+							"query": [
+								{
+									"key": "quizTestId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteQuizTest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Test/DeleteQuizTest?quizTestId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"DeleteQuizTest"
+							],
+							"query": [
+								{
+									"key": "quizTestId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchByName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Test/SearchByName?ContentName=a",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"SearchByName"
+							],
+							"query": [
+								{
+									"key": "ContentName",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FilterQuizBank",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"quizType\": [\r\n    0\r\n  ],\r\n  \"quizTopic\": [\r\n    \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Test/FilterQuizBank",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"FilterQuizBank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ViewQuiz",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Test/ViewQuiz?QuizID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"ViewQuiz"
+							],
+							"query": [
+								{
+									"key": "QuizID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doing quiz",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  {\r\n    \"quizID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"detailQuizQuestionID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"question\": \"string\",\r\n    \"answer1\": \"string\",\r\n    \"answer2\": \"string\",\r\n    \"answer3\": \"string\",\r\n    \"answer4\": \"string\",\r\n    \"userAnswer\": \"string\"\r\n  }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Test/DoingQuiz?TrainingClassParticipateID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"DoingQuiz"
+							],
+							"query": [
+								{
+									"key": "TrainingClassParticipateID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ViewDetailResult",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Test/ViewDetailResult?QuizID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"ViewDetailResult"
+							],
+							"query": [
+								{
+									"key": "QuizID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ViewDetailResultTrainee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Test/ViewDetailResultTrainee?QuizID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Test",
+								"ViewDetailResultTrainee"
+							],
+							"query": [
+								{
+									"key": "QuizID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Training Class",
+			"item": [
+				{
+					"name": "Create Training Class",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\",function(){\r",
+									"    pm.response.to.have.status(\"OK\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"string\",\r\n  \"startTime\": \"2023-03-08T06:00:33.630Z\",\r\n  \"endTime\": \"2023-04-08T06:00:33.630Z\",\r\n  \"locationID\": \"9550EA24-B889-4B0C-A894-479D47FC6959\",\r\n  \"trainingProgramId\": \"4446B020-ABEC-40AB-913F-3CE9754A3AB2\",\r\n  \"statusClassDetail\": \"Planning\",\r\n  \"code\":\"HCM_CPL_NET01\",\r\n  \"attendee\": \"Intern\",\r\n  \"branch\": \"FSU\",\r\n  \"userId\": [\r\n    \"997bba71-c31e-4ebb-9ed2-1f35a6544ec0\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/CreateTrainingClass",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"CreateTrainingClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchClassByName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/SearchClassByName?name=",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"SearchClassByName"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DuplicateClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/DuplicateClass?id=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"DuplicateClass"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTrainingClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"string\",\r\n  \"startTime\": \"2023-03-08T06:05:47.085Z\",\r\n  \"endTime\": \"2023-03-08T06:05:47.085Z\",\r\n  \"locationID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"trainingProgramId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"statusClassDetail\": \"string\",\r\n  \"attendee\": \"string\",\r\n  \"branch\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/UpdateTrainingClass?trainingClassId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"UpdateTrainingClass"
+							],
+							"query": [
+								{
+									"key": "trainingClassId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateTrainingClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"string\",\r\n  \"startTime\": \"2023-03-08T06:06:34.286Z\",\r\n  \"endTime\": \"2023-03-08T06:06:34.286Z\",\r\n  \"locationID\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"trainingProgramId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"statusClassDetail\": \"string\",\r\n  \"attendee\": \"string\",\r\n  \"branch\": \"string\",\r\n  \"userId\": [\r\n    \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/CreateTrainingClass",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"CreateTrainingClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTraningClass",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/GetAllTraningClass",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"GetAllTraningClass"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FilterResult",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n  \"string\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/FilterResult?date1=1&date2=2",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"FilterResult"
+							],
+							"query": [
+								{
+									"key": "date1",
+									"value": "1"
+								},
+								{
+									"key": "date2",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SoftRemoveTrainingClass",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingClass/SoftRemoveTrainingClass?trainingClassId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingClass",
+								"SoftRemoveTrainingClass"
+							],
+							"query": [
+								{
+									"key": "trainingClassId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Topic",
+			"item": [
+				{
+					"name": "GetAllTopic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Topic/GetAllTopic",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Topic",
+								"GetAllTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNewTopic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"topicName\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/Topic/AddNewTopic",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Topic",
+								"AddNewTopic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTopic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Topic/DeleteTopic?topicID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Topic",
+								"DeleteTopic"
+							],
+							"query": [
+								{
+									"key": "topicID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTopic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Topic/UpdateTopic?topicID=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce&topicName=a",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Topic",
+								"UpdateTopic"
+							],
+							"query": [
+								{
+									"key": "topicID",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								},
+								{
+									"key": "topicName",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Training Program",
+			"item": [
+				{
+					"name": "CreateTrainingProgram",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 201:\",function(){\r",
+									"    pm.response.to.have.status(201)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"programName\": \"Java\",\r\n  \"duration\": 12,\r\n  \"status\": \"string\",\r\n  \"syllabusesId\": [\r\n    \"CAEBB6D5-543C-436A-9CE1-F2DFBBE53615\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingProgram/Create",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingProgram",
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Detail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingProgram/GetDetail?trainingProgramId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingProgram",
+								"GetDetail"
+							],
+							"query": [
+								{
+									"key": "trainingProgramId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"programName\": \"string\",\r\n  \"duration\": 0,\r\n  \"status\": \"string\",\r\n  \"syllabusesId\": [\r\n    \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n  ],\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingProgram/Update",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingProgram",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingProgram/Delete?trainingProgramId=e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingProgram",
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "trainingProgramId",
+									"value": "e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllTrainingProgram",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingProgram/GetAllTrainingProgram",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingProgram",
+								"GetAllTrainingProgram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingProgram/Search?searchString=a",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingProgram",
+								"Search"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TrainingMaterials",
+			"item": [
+				{
+					"name": "Download File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"xlsx file is downloaded successfully\", () => { \r",
+									"    const content = pm.response.headers.get(\"Content-Disposition\");\r",
+									"    pm.expect(content).to.match(/^attachment.+xlsx$/);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingMaterials/Download/DownloadFile?id=C9726CE8-F856-46C6-8AE0-D7710961905A",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingMaterials",
+								"Download",
+								"DownloadFile"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "C9726CE8-F856-46C6-8AE0-D7710961905A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UploadFile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"    tests['Response latency is acceptable'] = responseTime < 200;\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/minhq/OneDrive/Máy tính/PRN211_Slides/materials.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingMaterials/Upload/UploadFile?lectureId=87A9ABE9-F26E-4A13-B165-0C2F6DA86DE4",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingMaterials",
+								"Upload",
+								"UploadFile"
+							],
+							"query": [
+								{
+									"key": "lectureId",
+									"value": "87A9ABE9-F26E-4A13-B165-0C2F6DA86DE4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should be 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"    tests['Response latency is acceptable'] = responseTime < 200;\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/TrainingMaterials/DeleteTrainingMaterial/DeleteFile?id=2F4E084A-3A66-4EB5-B1AA-10F1F557DDB0",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingMaterials",
+								"DeleteTrainingMaterial",
+								"DeleteFile"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2F4E084A-3A66-4EB5-B1AA-10F1F557DDB0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/minhq/OneDrive/Máy tính/PRN211_Slides/materials.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/TrainingMaterials/UpdateTrainingMaterial/EditFile?id=C9726CE8-F856-46C6-8AE0-D7710961905A",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"TrainingMaterials",
+								"UpdateTrainingMaterial",
+								"EditFile"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "C9726CE8-F856-46C6-8AE0-D7710961905A"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unit",
+			"item": [
+				{
+					"name": "GetUnitBSyllabusID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/Unit/GetUnitBSyllabusID/e117d7cd-b8c2-4ef1-a6a2-3013300a98ce",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"Unit",
+								"GetUnitBSyllabusID",
+								"e117d7cd-b8c2-4ef1-a6a2-3013300a98ce"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AuditPlan",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"auditPlanName\": \"auditPlan1\",\r\n  \"auditLocation\": \"FPT\",\r\n  \"auditDate\": \"2023-03-08T03:56:56.354Z\",\r\n  \"lectureId\": \"67B9682B-5A4C-4C77-BCCE-3AFFD8BB845B\",\r\n  \"createAuditQuestionDTOS\": [\r\n    {\r\n      \"description\": \"Audit plan 1\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/AuditPlan/Create",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditPlan",
+								"Create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/AuditPlan/GetDetail?auditPlanId=838F3826-547D-4ED5-97D9-A8E69D9940EB",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditPlan",
+								"GetDetail"
+							],
+							"query": [
+								{
+									"key": "auditPlanId",
+									"value": "838F3826-547D-4ED5-97D9-A8E69D9940EB"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/AuditPlan/Delete?auditPlanId",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditPlan",
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "auditPlanId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"auditPlanName\": \"auditPlan1\",\r\n  \"auditLocation\": \"FPT\",\r\n  \"auditDate\": \"2023-03-08T03:56:56.354Z\",\r\n  \"lectureId\": \"2F025D7E-ABE1-483A-B717-C813E909B153\",\r\n  \"createAuditQuestionDTOS\": [\r\n    {\r\n      \"description\": \"Audit plan 1\"\r\n    }\r\n  ],\r\n    \"id\": \"1AA447D0-4BE8-4FC1-B976-6FEDAAF37D9F\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/AuditPlan/Update",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditPlan",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AuditSubmission",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"submissionDate\": \"2023-03-08T15:51:09.154Z\",\r\n  \"totalGrade\": 10,\r\n  \"message\": \"Done\",\r\n  \"auditPlanId\": \"96FD2F8E-0234-4930-840A-31B36B446BB4\",\r\n  \"userId\": \"BFF249FE-4A6A-46E9-8375-11651BFFE13F\",\r\n  \"auditSubmissions\": [\r\n    {\r\n      \"detailQuesionId\": \"276EA32F-EAAC-4E58-9FC2-A680DF8B6557\",\r\n      \"answer\": \"Done\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/AuditSubmission/Create?detailTrainingClassParticipate=E69CEE3D-3FB5-48B4-8F6E-C9984C4A75B1",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditSubmission",
+								"Create"
+							],
+							"query": [
+								{
+									"key": "detailTrainingClassParticipate",
+									"value": "E69CEE3D-3FB5-48B4-8F6E-C9984C4A75B1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/AuditSubmission/GetDetail?auditSubmissionId",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditSubmission",
+								"GetDetail"
+							],
+							"query": [
+								{
+									"key": "auditSubmissionId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/AuditSubmission/Delete?auditSubmissionId",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditSubmission",
+								"Delete"
+							],
+							"query": [
+								{
+									"key": "auditSubmissionId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"submissionDate\": \"2023-03-08T15:54:13.644Z\",\r\n  \"totalGrade\": 0,\r\n  \"message\": \"string\",\r\n  \"auditPlanId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"userId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"auditSubmissions\": [\r\n    {\r\n      \"detailQuesionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n      \"answer\": \"string\"\r\n    }\r\n  ],\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/AuditSubmission/Update",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditSubmission",
+								"Update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllByAuditPlan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/AuditSubmission/GetAllByAuditPlan?auditPLanId",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"AuditSubmission",
+								"GetAllByAuditPlan"
+							],
+							"query": [
+								{
+									"key": "auditPLanId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Assignment",
+			"item": [
+				{
+					"name": "DownloadAssignment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAssignment",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateAssignment",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "CreateAssignment",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "ViewAssignmentByLectureID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AssignmentSubmiss",
+			"item": [
+				{
+					"name": "SubmissAssignment",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSubmission",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DownLoadSubmission",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "EditSubmission",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "GradingReview",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
